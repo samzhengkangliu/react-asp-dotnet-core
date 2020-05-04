@@ -1,7 +1,7 @@
 import React, { useEffect, Fragment, useContext } from "react";
 import { Container } from "semantic-ui-react";
 
-// Component
+// Components
 import NavBar from "../../features/nav/NavBar";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
 import LoadingComponent from "./LoadingComponent";

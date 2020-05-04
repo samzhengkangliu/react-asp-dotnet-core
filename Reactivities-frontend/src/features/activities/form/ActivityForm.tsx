@@ -21,7 +21,6 @@ const ActivityForm: React.FC<IProps> = ({ activity: initialFormState }) => {
     submitting,
     cancelFormOpen,
   } = activityStore;
-
   const initializeForm = () => {
     if (initialFormState) {
       return initialFormState;
@@ -63,42 +62,42 @@ const ActivityForm: React.FC<IProps> = ({ activity: initialFormState }) => {
     <Segment clearing>
       <Form onSubmit={handleSubmit}>
         <Form.Input
+          onChange={handleInputChange}
           name="title"
           placeholder="Title"
           value={activity.title}
-          onChange={handleInputChange}
         />
         <Form.TextArea
+          onChange={handleInputChange}
           name="description"
           rows={2}
           placeholder="Description"
           value={activity.description}
-          onChange={handleInputChange}
         />
         <Form.Input
+          onChange={handleInputChange}
           name="category"
           placeholder="Category"
           value={activity.category}
-          onChange={handleInputChange}
         />
         <Form.Input
+          onChange={handleInputChange}
           name="date"
           type="datetime-local"
           placeholder="Date"
           value={activity.date}
-          onChange={handleInputChange}
         />
         <Form.Input
+          onChange={handleInputChange}
           name="city"
           placeholder="City"
           value={activity.city}
-          onChange={handleInputChange}
         />
         <Form.Input
+          onChange={handleInputChange}
           name="venue"
           placeholder="Venue"
           value={activity.venue}
-          onChange={handleInputChange}
         />
         <Button
           loading={submitting}
@@ -108,10 +107,10 @@ const ActivityForm: React.FC<IProps> = ({ activity: initialFormState }) => {
           content="Submit"
         />
         <Button
+          onClick={cancelFormOpen}
           floated="right"
           type="button"
           content="Cancel"
-          onClick={cancelFormOpen}
         />
       </Form>
     </Segment>

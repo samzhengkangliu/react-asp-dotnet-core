@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { Grid, GridColumn } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 
-// Component
+// Components
 import ActivityList from "./ActivityList";
 import ActivityDetails from "../details/ActivityDetails";
 import ActivityForm from "../form/ActivityForm";
@@ -13,13 +13,12 @@ import ActivityStore from "../../../app/stores/ActivityStore";
 const ActivityDashboard: React.FC = () => {
   const activityStore = useContext(ActivityStore);
   const { editMode, selectedActivity } = activityStore;
-
   return (
     <Grid>
-      <GridColumn width={10}>
+      <Grid.Column width={10}>
         <ActivityList />
-      </GridColumn>
-      <GridColumn width={6}>
+      </Grid.Column>
+      <Grid.Column width={6}>
         {selectedActivity && !editMode && <ActivityDetails />}
         {editMode && (
           <ActivityForm
@@ -27,7 +26,7 @@ const ActivityDashboard: React.FC = () => {
             activity={selectedActivity!}
           />
         )}
-      </GridColumn>
+      </Grid.Column>
     </Grid>
   );
 };
