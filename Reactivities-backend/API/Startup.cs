@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Middleware;
 using Application.Activities;
+using Domain;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -52,6 +54,16 @@ namespace API
             });
 
             services.AddMediatR(typeof(List.Handler).Assembly);
+
+            // var builder = services.AddIdentityCore<AppUser>();
+            // var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
+            // identityBuilder.AddEntityFrameworkStores<DataContext>();
+            // identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+
+            services.AddDefaultIdentity<AppUser>()
+            .AddEntityFrameworkStores<DataContext>()
+            .AddSignInManager<SignInManager<AppUser>>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
