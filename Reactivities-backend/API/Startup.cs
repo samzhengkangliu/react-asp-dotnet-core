@@ -55,14 +55,16 @@ namespace API
 
             services.AddMediatR(typeof(List.Handler).Assembly);
 
-            // var builder = services.AddIdentityCore<AppUser>();
-            // var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
-            // identityBuilder.AddEntityFrameworkStores<DataContext>();
-            // identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+            var builder = services.AddIdentityCore<AppUser>();
+            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
+            identityBuilder.AddEntityFrameworkStores<DataContext>();
+            identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 
-            services.AddDefaultIdentity<AppUser>()
-            .AddEntityFrameworkStores<DataContext>()
-            .AddSignInManager<SignInManager<AppUser>>();
+            // services.AddDefaultIdentity<AppUser>()
+            // .AddEntityFrameworkStores<DataContext>()
+            // .AddSignInManager<SignInManager<AppUser>>();
+
+            services.AddAuthentication();
 
         }
 
