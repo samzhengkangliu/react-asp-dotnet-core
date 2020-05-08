@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import { Container } from "semantic-ui-react";
 
 // Router
@@ -18,13 +18,31 @@ import ActivityForm from "../../features/activities/form/ActivityForm";
 import ActivityDetails from "../../features/activities/details/ActivityDetails";
 import NotFound from "./NotFound";
 import LoginForm from "../../features/user/LoginForm";
+import LoadingComponent from "./LoadingComponent";
+import ModalContainer from "../common/modals/ModalContainer";
 
 // Mobx
 import { observer } from "mobx-react-lite";
+import { RootStoreContext } from "../stores/rootStore";
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
+  const rootStore = useContext(RootStoreContext);
+  const { setAppLoaded, token, appLoaded } = rootStore.commonStore;
+  const { getUser } = rootStore.userStore;
+
+  useEffect(() => {
+    if (token) {
+      getUser().finally(() => setAppLoaded());
+    } else {
+      setAppLoaded();
+    }
+  }, [getUser, setAppLoaded, token]);
+
+  if (!appLoaded) return <LoadingComponent content="Loading App..." />;
+
   return (
     <Fragment>
+      <ModalContainer/>
       <ToastContainer position="bottom-right" />
       <Route exact path="/" component={HomePage} />
       <Route

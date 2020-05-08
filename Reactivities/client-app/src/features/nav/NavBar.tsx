@@ -1,11 +1,14 @@
-import React from "react";
-import { Menu, Container, Button } from "semantic-ui-react";
-import { NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { Menu, Container, Button, Dropdown, Image } from "semantic-ui-react";
+import { NavLink, Link } from "react-router-dom";
 
 // Mobx
 import { observer } from "mobx-react-lite";
+import { RootStoreContext } from "../../app/stores/rootStore";
 
 const NavBar: React.FC = () => {
+  const rootStore = useContext(RootStoreContext);
+  const { user, logout } = rootStore.userStore;
 
   return (
     <div>
@@ -28,6 +31,26 @@ const NavBar: React.FC = () => {
               content="Create Activity"
             />
           </Menu.Item>
+          {user && (
+            <Menu.Item position="right">
+              <Image
+                avatar
+                spaced="right"
+                src={user.image || "/assets/user.png"}
+              />
+              <Dropdown pointing="top left" text={user.displayName}>
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    as={Link}
+                    to={`/profile/username`}
+                    text={user.displayName}
+                    icon="user"
+                  />
+                  <Dropdown.Item onClick={logout} text="Logout" icon="power" />
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu.Item>
+          )}
         </Container>
       </Menu>
     </div>

@@ -1,5 +1,6 @@
 import React, { useContext, Fragment } from "react";
 import { Item, Label } from "semantic-ui-react";
+import { format } from "date-fns";
 
 // Mobx
 import { observer } from "mobx-react-lite";
@@ -15,7 +16,7 @@ const ActivityList: React.FC = () => {
       {activitiesByDate.map(([group, activities]) => (
         <Fragment key={group}>
           <Label size="large" color="blue">
-            {group}
+            {format(Date.parse(group), "eeee do MMMM, yyyy")}
           </Label>
           <Item.Group divided>
             {activities.map((activity) => (
