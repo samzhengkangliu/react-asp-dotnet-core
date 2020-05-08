@@ -3,12 +3,12 @@ import { Item, Label } from "semantic-ui-react";
 
 // Mobx
 import { observer } from "mobx-react-lite";
-import ActivityStore from "../../../app/stores/ActivityStore";
+import { RootStoreContext } from "../../../app/stores/rootStore";
 import ActivityListItem from "./ActivityListItem";
 
 const ActivityList: React.FC = () => {
-  const activityStore = useContext(ActivityStore);
-  const { activitiesByDate } = activityStore;
+  const rootStore = useContext(RootStoreContext);
+  const { activitiesByDate } = rootStore.activityStore;
 
   return (
     <Fragment>
@@ -17,11 +17,11 @@ const ActivityList: React.FC = () => {
           <Label size="large" color="blue">
             {group}
           </Label>
-            <Item.Group divided>
-              {activities.map((activity) => (
-                <ActivityListItem key={activity.id} activity={activity} />
-              ))}
-            </Item.Group>
+          <Item.Group divided>
+            {activities.map((activity) => (
+              <ActivityListItem key={activity.id} activity={activity} />
+            ))}
+          </Item.Group>
         </Fragment>
       ))}
     </Fragment>

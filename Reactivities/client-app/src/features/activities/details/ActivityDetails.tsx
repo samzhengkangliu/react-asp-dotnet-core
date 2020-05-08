@@ -10,7 +10,7 @@ import ActivityDetailedChat from "./ActivityDetailedChat";
 import ActivityDetailedSidebar from "./ActivityDetailedSidebar";
 
 // Mobx
-import ActivityStore from "../../../app/stores/ActivityStore";
+import {RootStoreContext} from "../../../app/stores/rootStore";
 import { observer } from "mobx-react-lite";
 
 interface DetailsParams {
@@ -20,8 +20,8 @@ interface DetailsParams {
 const ActivityDetails: React.FC<RouteComponentProps<DetailsParams>> = ({
   match,
 }) => {
-  const activityStore = useContext(ActivityStore);
-  const { activity, loadActivity, loadingInitial } = activityStore;
+  const rootStore = useContext(RootStoreContext);
+  const { activity, loadActivity, loadingInitial } = rootStore.activityStore;
 
   useEffect(() => {
     loadActivity(match.params.id);

@@ -14,7 +14,7 @@ import { ActivityFormValues } from "../../../app/models/activity";
 import TextInput from "../../../app/common/form/TextInput";
 
 // Mobx
-import ActivityStore from "../../../app/stores/ActivityStore";
+import { RootStoreContext } from "../../../app/stores/rootStore";
 import { observer } from "mobx-react-lite";
 import { RouteComponentProps } from "react-router-dom";
 
@@ -48,13 +48,13 @@ const ActivityForm: React.FC<RouteComponentProps<DetailsParams>> = ({
   match,
   history,
 }) => {
-  const activityStore = useContext(ActivityStore);
+  const rootStore = useContext(RootStoreContext);
   const {
     createActivity,
     editActivity,
     submitting,
     loadActivity,
-  } = activityStore;
+  } = rootStore.activityStore;
 
   const [activity, setActivity] = useState(new ActivityFormValues());
   const [loading, setLoading] = useState(false);
