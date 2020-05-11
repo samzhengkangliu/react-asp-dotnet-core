@@ -9,6 +9,7 @@ using Application.Interfaces;
 using AutoMapper;
 using Domain;
 using FluentValidation.AspNetCore;
+using Infrastructure.Photos;
 using Infrastructure.Security;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -79,8 +80,10 @@ namespace API
             // .AddEntityFrameworkStores<DataContext>()
             // .AddSignInManager<SignInManager<AppUser>>();
 
-            services.AddAuthorization(opt => {
-                opt.AddPolicy("IsActivityHost", policy => {
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("IsActivityHost", policy =>
+                {
                     policy.Requirements.Add(new IsHostRequirement());
                 });
             });
@@ -102,6 +105,9 @@ namespace API
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             // Register get current user
             services.AddScoped<IUserAccessor, UserAccessor>();
+            // Register upload/delete photos
+            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+            services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
 
         }
 
