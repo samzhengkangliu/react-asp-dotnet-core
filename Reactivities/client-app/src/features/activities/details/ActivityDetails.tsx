@@ -10,7 +10,7 @@ import ActivityDetailedChat from "./ActivityDetailedChat";
 import ActivityDetailedSidebar from "./ActivityDetailedSidebar";
 
 // Mobx
-import {RootStoreContext} from "../../../app/stores/rootStore";
+import { RootStoreContext } from "../../../app/stores/rootStore";
 import { observer } from "mobx-react-lite";
 
 interface DetailsParams {
@@ -39,7 +39,7 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailsParams>> = ({
         <ActivityDetailedChat />
       </Grid.Column>
       <Grid.Column width={6}>
-        <ActivityDetailedSidebar />
+        <ActivityDetailedSidebar attendees={activity.attendees} />
       </Grid.Column>
     </Grid>
   );
