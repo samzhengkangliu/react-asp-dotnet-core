@@ -26,7 +26,7 @@ export default class ActivityStore {
   @observable loading = false;
   @observable.ref hubConnection: HubConnection | null = null;
 
-  @action createHubConnection = () => {
+  @action createHubConnection = (activityId: string) => {
     this.hubConnection = new HubConnectionBuilder()
       .withUrl("http://localhost:5000/chat", {
         // parse the token to HubContext as a query string
@@ -38,6 +38,12 @@ export default class ActivityStore {
     this.hubConnection
       .start()
       .then(() => console.log(this.hubConnection!.state))
+      .then(() => {
+        console.log("Attempting to join group");
+        if (this.hubConnection!.state === "Connected") {
+          this.hubConnection!.invoke("AddToGroup", activityId);
+        }
+      })
       .catch((error) => console.log("Error establishing connection: ", error));
 
     this.hubConnection.on("ReceiveComment", (comment) => {
@@ -45,10 +51,18 @@ export default class ActivityStore {
         this.activity!.comments.push(comment);
       });
     });
+    this.hubConnection.on("Send", (message) => {
+      console.log(message);
+    });
   };
 
   @action stopHubConnection = () => {
-    this.hubConnection!.stop();
+    this.hubConnection!.invoke("RemoveFromGroup", this.activity!.id)
+      .then(() => {
+        this.hubConnection!.stop();
+      })
+      .then(() => console.log("Connection stopped"))
+      .catch((error) => console.log(error));
   };
 
   @computed get activitiesByDate() {
@@ -142,6 +156,7 @@ export default class ActivityStore {
       let attendees = [];
       attendees.push(attendee);
       activity.attendees = attendees;
+      activity.comments = [];
       activity.isHost = true;
       runInAction("create activity", () => {
         this.activityRegistry.set(activity.id, activity);
