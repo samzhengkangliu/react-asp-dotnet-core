@@ -7,6 +7,7 @@ using API.Middleware;
 using API.SignalR;
 using Application.Activities;
 using Application.Interfaces;
+using Application.Profiles;
 using AutoMapper;
 using Domain;
 using FluentValidation.AspNetCore;
@@ -124,12 +125,14 @@ namespace API
                         }
                     };
                 });
-            // Register JWT Token generator
+            // Inject JWT Token generator
             services.AddScoped<IJwtGenerator, JwtGenerator>();
-            // Register get current user
+            // Inject get current user
             services.AddScoped<IUserAccessor, UserAccessor>();
-            // Register upload/delete photos
+            // Inject upload/delete photos
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+            // Inject ProfileReader
+            services.AddScoped<IProfileReader, ProfileReader>();
             services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
 
         }
