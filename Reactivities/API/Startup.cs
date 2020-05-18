@@ -43,6 +43,27 @@ namespace API
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // Dependency Injection Container
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            services.AddDbContext<DataContext>(opt =>
+                {
+                    // Enable lazy loading 
+                    opt.UseLazyLoadingProxies();
+                    opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                });
+            ConfigureServices(services);
+        }
+
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            services.AddDbContext<DataContext>(opt =>
+                {
+                    // Enable lazy loading 
+                    opt.UseLazyLoadingProxies();
+                    opt.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
+                });
+            ConfigureServices(services);
+        }
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers(opt =>
@@ -53,13 +74,6 @@ namespace API
             .AddFluentValidation(cfg =>
             {
                 cfg.RegisterValidatorsFromAssemblyContaining<Create>();
-            });
-
-            services.AddDbContext<DataContext>(opt =>
-            {
-                // Enable lazy loading 
-                opt.UseLazyLoadingProxies();
-                opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddCors(opt =>
