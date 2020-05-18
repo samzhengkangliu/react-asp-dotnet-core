@@ -6,3 +6,5 @@ wwwroot
 publish
 settings.json
 appsettings.json
+node_modules
+build
