@@ -6,7 +6,7 @@ import { RootStoreContext } from "../../app/stores/rootStore";
 import { IUserFormValues } from "../../app/models/user";
 import { FORM_ERROR } from "final-form";
 import { combineValidators, isRequired } from "revalidate";
-import ErrorMessage from "../../app/common/form/ErrorMessage";
+// import ErrorMessage from "../../app/common/form/ErrorMessage";
 
 const validate = combineValidators({
   email: isRequired("email"),
@@ -47,12 +47,12 @@ const LoginForm = () => {
             placeholder="Password"
             type="password"
           />
-          {submitError && !dirtySinceLastSubmit && (
+          {/* {submitError && !dirtySinceLastSubmit && (
             <ErrorMessage
               error={submitError}
               text="Invalid email or password"
             />
-          )}
+          )} */}
           <Button
             disabled={(invalid && !dirtySinceLastSubmit) || pristine}
             loading={submitting}

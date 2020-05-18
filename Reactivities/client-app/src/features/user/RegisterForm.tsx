@@ -6,7 +6,7 @@ import { RootStoreContext } from "../../app/stores/rootStore";
 import { IUserFormValues } from "../../app/models/user";
 import { FORM_ERROR } from "final-form";
 import { combineValidators, isRequired } from "revalidate";
-import ErrorMessage from "../../app/common/form/ErrorMessage";
+// import ErrorMessage from "../../app/common/form/ErrorMessage";
 
 const validate = combineValidators({
   username: isRequired("username"),
@@ -55,9 +55,9 @@ const RegisterForm = () => {
             placeholder="Password"
             type="password"
           />
-          {submitError && !dirtySinceLastSubmit && (
+          {/* {submitError && !dirtySinceLastSubmit && (
             <ErrorMessage error={submitError} />
-          )}
+          )} */}
           <Button
             disabled={(invalid && !dirtySinceLastSubmit) || pristine}
             loading={submitting}
