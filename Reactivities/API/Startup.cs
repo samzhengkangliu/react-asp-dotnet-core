@@ -153,7 +153,10 @@ namespace API
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             // Inject ProfileReader
             services.AddScoped<IProfileReader, ProfileReader>();
+            // Inject FacebookAccessor
+            services.AddScoped<IFacebookAccessor, FacebookAccessor>();
             services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
+            services.Configure<FacebookAppSettings>(Configuration.GetSection("Authentication:Facebook"));
 
         }
 
@@ -165,7 +168,9 @@ namespace API
             {
                 // app.UseDeveloperExceptionPage();
 
-            } else {
+            }
+            else
+            {
                 app.UseHsts();
             }
 
