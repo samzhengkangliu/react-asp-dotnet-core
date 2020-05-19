@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Domain;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -46,7 +42,7 @@ namespace API
                 {
                     webBuilder.UseStartup<Startup>();
                     // Turn off server header
-                    webBuilder.UseKestrel(x => x.AddServerHeader = false);
+                    // webBuilder.UseKestrel(x => x.AddServerHeader = false);
                 });
     }
 }
