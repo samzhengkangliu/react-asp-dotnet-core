@@ -167,6 +167,25 @@ namespace API
 
             }
 
+            // prevent content sniffing
+            app.UseXContentTypeOptions();
+            // restrict the amount of information being passed on to other sites 
+            app.UseReferrerPolicy(opt => opt.NoReferrer());
+            // stop page from loading when detected cross site scripting attacks
+            app.UseXXssProtection(opt => opt.EnabledWithBlockMode());
+            // block iframes and prevent click jacking attacks
+            app.UseXfo(opt => opt.Deny());
+            // Add content-security-policies
+            app.UseCsp(opt => opt
+                .BlockAllMixedContent()
+                .StyleSources(s => s.Self().CustomSources("https://fonts.googleapis.com", "sha256-F4GpCPyRepgP5znjMD8sc7PEjzet5Eef4r09dEGPpTs="))
+                .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com", "data:"))
+                .FormActions(s => s.Self())
+                .FrameAncestors(s => s.Self())
+                .ImageSources(s => s.Self().CustomSources("https://res.cloudinary.com", "blob:", "data:"))
+                .ScriptSources(s => s.Self().CustomSources("sha256-0kyO1fBtGWkSpqdvIt6IoLTEsr6VTIzEoXHkDpAWs/8="))
+            );
+
             // app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
